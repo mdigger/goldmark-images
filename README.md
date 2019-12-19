@@ -1,2 +1,20 @@
-# goldmark-include
-Goldmark image replacer extension
+# goldmark-images
+
+[Goldmark](https://github.com/yuin/goldmark) image replacer extension.
+
+```go
+imageURL := func (src string) string {
+	return "test-" + src
+}
+
+source := []byte(`![alt](image.png "title")`)
+gm := goldmark.New(
+    WithReplacer(imageURL),
+    goldmark.WithRendererOptions(html.WithXHTML()),
+)
+err = gm.Convert(source, os.Stdout)
+```
+
+```html
+<p><img src="test-image.png" alt="alt" title="title" /></p>
+```

@@ -1,5 +1,7 @@
 # goldmark-images
 
+[![GoDoc](https://godoc.org/github.com/mdigger/goldmark-images?status.svg)](https://godoc.org/github.com/mdigger/goldmark-images)
+
 [Goldmark](https://github.com/yuin/goldmark) image replacer extension.
 
 ```go

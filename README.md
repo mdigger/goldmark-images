@@ -11,7 +11,7 @@ imageURL := func (src string) string {
 
 source := []byte(`![alt](image.png "title")`)
 gm := goldmark.New(
-    WithReplacer(imageURL),
+    images.WithReplacer(imageURL),
     goldmark.WithRendererOptions(html.WithXHTML()),
 )
 err = gm.Convert(source, os.Stdout)

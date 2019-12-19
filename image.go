@@ -19,8 +19,8 @@ func (o *withReplacer) SetConfig(c *renderer.Config) {
 	c.NodeRenderers = append(c.NodeRenderers, util.Prioritized(o.value, 0))
 }
 
-// WithReplacer adding src url replacing function to image html render.
-func WithReplacer(r ReplaceFunc) goldmark.Option {
+// NewReplacer adding src url replacing function to image html render.
+func NewReplacer(r ReplaceFunc) goldmark.Option {
 	return goldmark.WithRendererOptions(
 		renderer.WithNodeRenderers(
 			util.Prioritized(New(r), 0),

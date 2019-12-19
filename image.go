@@ -1,3 +1,6 @@
+// Package images is a extension for the goldmark(http://github.com/yuin/goldmark).
+//
+// This extension adds replacer render to change image urls.
 package images
 
 import (

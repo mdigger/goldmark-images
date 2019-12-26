@@ -15,7 +15,7 @@ import (
 type ReplaceFunc = func(link string) string
 
 type withReplacer struct {
-	value *Replacer
+	value *replacer
 }
 
 func (o *withReplacer) SetConfig(c *renderer.Config) {
@@ -31,30 +31,30 @@ func NewReplacer(r ReplaceFunc) goldmark.Option {
 	)
 }
 
-// Replacer render image with replaced source link.
-type Replacer struct {
+// replacer render image with replaced source link.
+type replacer struct {
 	html.Config
 	ReplaceFunc
 }
 
 // New return initialized image render with source url replacing support.
-func New(r ReplaceFunc, options ...html.Option) *Replacer {
+func New(r ReplaceFunc, options ...html.Option) goldmark.Extender {
 	var config = html.NewConfig()
 	for _, opt := range options {
 		opt.SetHTMLOption(&config)
 	}
-	return &Replacer{
+	return &replacer{
 		Config:      config,
 		ReplaceFunc: r,
 	}
 }
 
 // RegisterFuncs implements NodeRenderer.RegisterFuncs interface.
-func (r *Replacer) RegisterFuncs(reg renderer.NodeRendererFuncRegisterer) {
+func (r *replacer) RegisterFuncs(reg renderer.NodeRendererFuncRegisterer) {
 	reg.Register(ast.KindImage, r.renderImage)
 }
 
-func (r *Replacer) renderImage(w util.BufWriter, source []byte, node ast.Node, entering bool) (ast.WalkStatus, error) {
+func (r *replacer) renderImage(w util.BufWriter, source []byte, node ast.Node, entering bool) (ast.WalkStatus, error) {
 	if !entering {
 		return ast.WalkContinue, nil
 	}
@@ -94,7 +94,7 @@ func (r *Replacer) renderImage(w util.BufWriter, source []byte, node ast.Node, e
 }
 
 // Extend implement goldmark.Extender interface.
-func (r *Replacer) Extend(m goldmark.Markdown) {
+func (r *replacer) Extend(m goldmark.Markdown) {
 	if r.ReplaceFunc == nil {
 		return
 	}
